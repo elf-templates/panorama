@@ -1,12 +1,15 @@
-@charset "UTF-8";
+/**
+ * Loading Page
+ */
 .loading {
   position: absolute;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
-  z-index: 9999;
+  z-index: 400;
   background-color: #363535;
+
   .inner {
     display: block;
     position: absolute;
@@ -15,18 +18,19 @@
     width: 200px;
     height: 200px;
     margin: -100px 0 0 -100px;
-    border-radius: 50%;
     border: 3px solid transparent;
+    border-radius: 50%;
     border-top-color: #3498db;
     animation: spin 2s linear infinite;
+
     .before {
       position: absolute;
       top: 5px;
       left: 5px;
       right: 5px;
       bottom: 5px;
-      border-radius: 50%;
       border: 3px solid transparent;
+      border-radius: 50%;
       border-top-color: #e74c3c;
       animation: spin 3s linear infinite;
     }
@@ -36,8 +40,8 @@
       left: 15px;
       right: 15px;
       bottom: 15px;
-      border-radius: 50%;
       border: 3px solid transparent;
+      border-radius: 50%;
       border-top-color: #f9c922;
       animation: spin 1.5s linear infinite;
     }

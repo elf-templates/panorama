@@ -1,5 +1,5 @@
 require('../index.html')
-require('../css/main.scss')
+require('../css/package.scss')
 
 window.THREE = require('three/build/three.min.js')
 require('three/examples/js/renderers/Projector.js')
@@ -20,30 +20,28 @@ require('../img/pano2-s.jpg')
 require('../img/pano3-s.jpg')
 require('../img/pano4-s.jpg')
 
-var orientation
-var camera, scene, renderer
-var texture_placeholder,
-  isUserInteracting = false,
-  onPointerDownPointerX = 0,
-  onPointerDownPointerY = 0,
-  lon = 90,
-  lat = 0,
-  phi = 0,
-  theta = 0,
-  target = new THREE.Vector3(),
-  lonOrientation = 0,
-  latOrientation = 0,
-  lonOffset = 0,
-  latOffset = 0,
-  startTime = 0,
-  startLon = 0,
-  startLat = 0,
-  duraTime = 0
+var orientation, camera, scene, renderer, texture_placeholder
+var isUserInteracting = false
+var onPointerDownPointerX = 0
+var onPointerDownPointerY = 0
+var lon = 90
+var lat = 0
+var phi = 0
+var theta = 0
+var target = new THREE.Vector3()
+var lonOrientation = 0
+var latOrientation = 0
+var lonOffset = 0
+var latOffset = 0
+var startTime = 0
+var startLon = 0
+var startLat = 0
+var duraTime = 0
 
 /**
  * init
  */
-function init() {
+function init () {
   console.log('init ok')
   var container, mesh
   container = document.getElementById('container')
@@ -53,9 +51,11 @@ function init() {
   texture_placeholder = document.createElement('canvas')
   texture_placeholder.width = 128
   texture_placeholder.height = 128
+
   var context = texture_placeholder.getContext('2d')
   context.fillStyle = 'rgb( 200, 200, 200 )'
   context.fillRect(0, 0, texture_placeholder.width, texture_placeholder.height)
+
   var materials = [
     loadTexture('img/pano3-s.jpg'), // right
     loadTexture('img/pano2-s.jpg'), // left
@@ -92,7 +92,7 @@ function init() {
   window.addEventListener('resize', onWindowResize, false)
 }
 
-function webglAvailable() {
+function webglAvailable () {
   try {
     var canvas = document.createElement('canvas');
     return !!(window.WebGLRenderingContext && (
@@ -103,13 +103,13 @@ function webglAvailable() {
   }
 }
 
-function onWindowResize() {
+function onWindowResize () {
   camera.aspect = window.innerWidth / window.innerHeight
   camera.updateProjectionMatrix()
   renderer.setSize(window.innerWidth, window.innerHeight)
 }
 
-function loadTexture(path) {
+function loadTexture (path) {
   var texture = new THREE.Texture(texture_placeholder)
   var material = new THREE.MeshBasicMaterial({
     map: texture,
@@ -124,7 +124,7 @@ function loadTexture(path) {
   return material
 }
 
-function onDocumentMouseDown(event) {
+function onDocumentMouseDown (event) {
   event.preventDefault()
   onPointerDownPointerX = event.clientX
   onPointerDownPointerY = event.clientY
@@ -132,14 +132,14 @@ function onDocumentMouseDown(event) {
   onPointerDownLat = lat
 }
 
-function onDocumentMouseMove(event) {
+function onDocumentMouseMove (event) {
   lon = (onPointerDownPointerX - event.clientX) * 0.1 + onPointerDownLon
   lat = (event.clientY - onPointerDownPointerY) * 0.1 + onPointerDownLat
 }
 
-function onDocumentMouseUp(event) {}
+function onDocumentMouseUp (event) {}
 
-function onDocumentTouchStart(event) {
+function onDocumentTouchStart (event) {
   if (event.touches.length == 1) {
     event.preventDefault()
     onPointerDownPointerX = event.touches[0].pageX
@@ -155,7 +155,7 @@ function onDocumentTouchStart(event) {
   }
 }
 
-function onDocumentTouchMove(event) {
+function onDocumentTouchMove (event) {
   if (event.touches.length == 1) {
     event.preventDefault()
     lon = (onPointerDownPointerX - event.touches[0].pageX) * 0.2 + onPointerDownLon
@@ -163,7 +163,7 @@ function onDocumentTouchMove(event) {
   }
 }
 
-function onDocumentTouchEnd(event) {
+function onDocumentTouchEnd (event) {
   duraTime = Date.now() - startTime
   lonOffset = startLon - event.pageX
   latOffset = event.pageY - startLat
@@ -172,12 +172,12 @@ function onDocumentTouchEnd(event) {
   latOffset = (latOffset / duraTime) * 50
 }
 
-function animate() {
+function animate () {
   requestAnimationFrame(animate)
   update()
 }
 
-function update() {
+function update () {
   if (Math.abs(lonOrientation) > 0.01) {
     lon += -lonOrientation
     lonOrientation = 0
@@ -206,7 +206,7 @@ function update() {
   renderer.render(scene, camera)
 }
 
-function initOrientation() {
+function initOrientation () {
   orientation = new Orientation({
     onChange: function (e) {
       lonOrientation += e.offsetLon
